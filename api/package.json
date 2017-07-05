@@ -1,0 +1,45 @@
+{
+  "name": "hysmm-api",
+  "version": "1.0.0",
+  "description": "Movie Organizer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "devmon": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bhoriuchi/hysmm.git"
+  },
+  "author": "Branden Horiuchi <bhoriuchi@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bhoriuchi/hysmm/issues"
+  },
+  "homepage": "https://github.com/bhoriuchi/hysmm#readme",
+  "dependencies": {
+    "babel-core": "^6.25.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-register": "^6.24.1",
+    "babel-runtime": "^6.23.0",
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.2",
+    "cors": "^2.8.3",
+    "express": "^4.15.3",
+    "express-graphql": "^0.6.6",
+    "graphql": "^0.10.3",
+    "graphql-factory": "^2.0.0",
+    "hat": "0.0.3",
+    "jsonwebtoken": "^7.4.1",
+    "localdown": "^0.1.0",
+    "lodash": "^4.17.4",
+    "nodemon": "^1.11.0",
+    "passport": "^0.3.2",
+    "passport-jwt": "^2.2.1",
+    "passport-local": "^1.0.0",
+    "passport.socketio": "^3.7.0",
+    "socket.io": "^2.0.3",
+    "socketio-jwt": "^4.5.0"
+  }
+}

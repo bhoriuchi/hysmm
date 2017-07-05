@@ -1,6 +1,6 @@
-# hysmm
+# hysmm-ui
 
-> Have you seen my movies?
+> HYSMM UI
 
 ## Build Setup
 
