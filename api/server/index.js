@@ -1,17 +1,33 @@
 import _ from 'lodash'
 import BodyParser from 'body-parser'
+import Bunyan from 'bunyan'
 import EventEmitter from 'events'
 import Express from 'express'
 import ExpressGraphQL from 'express-graphql'
 import http from 'http'
-import Localdown from 'localdown'
+import Levelup from 'levelup'
 import Passport from 'passport'
+import path from 'path'
 import SocketIO from 'socket.io'
 
 export default class APIServer extends EventEmitter {
   constructor () {
     super()
 
+    this.log = Bunyan.createLogger({
+      name: 'hysmm',
+      streams: [
+        {
+          stream: process.stdout
+        },
+        {
+          path: path.resolve(__dirname, '../../logs/server.log')
+        }
+      ]
+    })
+
+    this.db = Levelup(path.resolve(__dirname, 'config'), { db: require('localdown') })
+    this.port = 8085
     this._app = Express()
     this._app.use(BodyParser.urlencoded({ extended: false }))
     this._app.use(BodyParser.json())
@@ -20,19 +36,21 @@ export default class APIServer extends EventEmitter {
     this._io = SocketIO(this._server, { path: '/api/socket.io/' })
 
     this._io.on('connection', socket => {
-      console.log('Socket connected')
+      this.log.info('Socket connected')
 
-      socket.on('hello', () => {
-        console.log('hello')
+      socket.on('BACKEND_STATE', () => {
+        this.db.get('config', (err, value) => {
+          socket.emit('BACKEND_STATE', (err || !value) ? 'uninitialized' : 'initialized')
+        })
       })
     })
 
-    this.server = this._server.listen(8085, error => {
-      if (error) {
-        console.error({ error })
+    this.server = this._server.listen(this.port, err => {
+      if (err) {
+        this.log.fatal(err)
         process.exit()
       }
-      console.log('Started server...')
+      this.log.info('Started server...')
     })
   }
 }
